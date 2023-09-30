@@ -12,7 +12,7 @@ const RootModel = types
   .model({
     userName: types.maybeNull(types.string),
     userId: types.maybeNull(types.string),
-    items: types.maybeNull(types.frozen([])),
+    items: types.maybeNull(types.frozen<GetVideosResponse[]>()),
   })
   .actions((self) => ({
     setUserName(val: string) {

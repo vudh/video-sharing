@@ -6,7 +6,7 @@ import AlertDialog from "components/common/alert-dialog";
 import { observer } from "mobx-react-lite";
 import ShareVideoDialog from "components/share-video-dialog/share-video-dialog";
 
-export const MainNavbar = observer(() => {
+const MainNavbar = observer(() => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -109,3 +109,4 @@ export const MainNavbar = observer(() => {
     </>
   );
 });
+export default MainNavbar;

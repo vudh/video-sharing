@@ -4,6 +4,8 @@ export interface GetVideosResponse {
   SharedBy?: string;
   VideoUrl?: string;
   Description?: string;
+  NumberOfLikes?: number;
+  NumberOfDislikes?: number;
   ItemReactions: ItemReaction[];
 }
 

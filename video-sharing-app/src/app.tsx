@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { MainNavbar } from "./components/layout/nav-bar";
+import MainNavbar from "components/layout/nav-bar";
 import VideoList from "components/video-list/video-list";
 import { Stack } from "@mui/material";
 import { useStores } from "stores/root-store";
