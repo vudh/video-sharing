@@ -1,0 +1,30 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/video-sharing-app/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/video-sharing-app/coverage
+
+# production
+/video-sharing-app/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+package-lock.json
+yarn.lock
+
+/backend/VideoSharing/.vs
+/backend/VideoSharing/bin
+/backend/VideoSharing/obj
