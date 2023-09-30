@@ -5,12 +5,15 @@ import { useStores } from "stores/root-store";
 import AlertDialog from "components/common/alert-dialog";
 import { observer } from "mobx-react-lite";
 import ShareVideoDialog from "components/share-video-dialog/share-video-dialog";
+import RegisterDialog from "components/register-user-dialog/register-user-dialog";
 
 const MainNavbar = observer(() => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [openShareVideo, setOpenShareVideo] = useState(false);
+
+  const [openRegisterUser, setOpenRegisterUser] = useState(false);
 
   const [openAlert, setOpenAlert] = useState(false);
   const [alertContent, setAlertContent] = useState("");
@@ -41,6 +44,26 @@ const MainNavbar = observer(() => {
     } else {
       setOpenShareVideo(false);
     }
+  };
+
+  const onRegisterUserSaved = async (values) => {
+    const res = await rootStore.registerUser(
+      values.email,
+      values.name,
+      values.password
+    );
+    let msg = res ? res.Message : "An error has been occured!";
+    if (res?.Success) {
+      msg = "Register new user successfully!";
+      setOpenRegisterUser(false);
+    }
+
+    if (msg) {
+      setOpenAlert(true);
+      setAlertContent(msg);
+    }
+
+    return res ? res.Success || false : false;
   };
 
   const onLogout = (ev) => {
@@ -91,7 +114,12 @@ const MainNavbar = observer(() => {
               <Button variant="contained" onClick={onLoginClicked}>
                 Login
               </Button>
-              <Button variant="outlined">Register</Button>
+              <Button
+                variant="outlined"
+                onClick={() => setOpenRegisterUser(true)}
+              >
+                Register
+              </Button>
             </Stack>
           )}
         </MainToolbar>
@@ -105,6 +133,11 @@ const MainNavbar = observer(() => {
         open={openShareVideo}
         onClose={() => setOpenShareVideo(false)}
         onSave={onShareVideoSaved}
+      />
+      <RegisterDialog
+        open={openRegisterUser}
+        onClose={() => setOpenRegisterUser(false)}
+        onSave={onRegisterUserSaved}
       />
     </>
   );

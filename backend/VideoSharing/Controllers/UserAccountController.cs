@@ -50,11 +50,25 @@ namespace VideoSharing.Controllers
         [HttpPost]
         public async Task<IActionResult> PostAsync([FromBody] UserAccountEntity entity)
         {
+            var result = new RegisterUserResponse();
+
             entity.Password = PasswordHelper.HashPassword(entity.Password);
             entity.PartitionKey = entity.Name;
             entity.RowKey = entity.Id;
-            var createdEntity = await _storageService.UpsertEntityAsync(entity);
-            return Ok(createdEntity);
+            
+            try
+            {
+                var createdEntity = await _storageService.UpsertEntityAsync(entity);
+                result.Success = true;
+                result.UserId = entity.Id;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = ex.Message;
+            }
+
+            return Ok(result);
         }
     }
 }

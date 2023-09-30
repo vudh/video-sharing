@@ -6,6 +6,7 @@ import { LoggingLevel } from "shared/enums/logging-level";
 import { LoggingHelper } from "shared/helpers/logging-helper";
 import { GetVideosResponse } from "shared/models/responses/get-videos-response";
 import { LoginResponse } from "shared/models/responses/login-response";
+import { RegisterUserResponse } from "shared/models/responses/register-user-response";
 import { ShareVideoResponse } from "shared/models/responses/share-video-response";
 
 const RootModel = types
@@ -70,6 +71,29 @@ const RootModel = types
         LoggingHelper.writeLog(
           "root-store",
           "shareVideo",
+          `${error ? JSON.stringify(error) : ""}`,
+          LoggingLevel.Error
+        );
+      }
+      return null;
+    }),
+    registerUser: flow(function* (
+      email: string,
+      name: string,
+      password: string
+    ) {
+      try {
+        const result: RegisterUserResponse = yield userBusiness.registerNewUser(
+          email,
+          name,
+          password
+        );
+
+        return result;
+      } catch (error) {
+        LoggingHelper.writeLog(
+          "root-store",
+          "registerUser",
           `${error ? JSON.stringify(error) : ""}`,
           LoggingLevel.Error
         );

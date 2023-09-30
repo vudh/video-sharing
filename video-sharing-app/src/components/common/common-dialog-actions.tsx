@@ -11,7 +11,7 @@ const CommonDialogActions = ({ isSubmitting, handleClose, handleSave }) => {
         </Box>
       ) : (
         <>
-          <Button onClick={handleClose} variant="contained">
+          <Button onClick={handleClose} variant="outlined">
             Cancel
           </Button>
           <Button type="submit" variant="contained" onClick={handleSave}>
