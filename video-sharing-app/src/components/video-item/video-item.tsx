@@ -14,15 +14,25 @@ import { useStores } from "stores/root-store";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 
-export default function VideoItem({ item }: VideoItemProps) {
+export default function VideoItem({ item, onItemReaction }: VideoItemProps) {
   const rootStore = useStores();
 
   const isVoted =
-    item.ItemReactions?.find((x) => x.UserId == rootStore.userId) !== undefined;
+    item.ItemReactions?.find((x) => x.UserId === rootStore.userId) !==
+    undefined;
   const isUpVoted =
     item.ItemReactions?.find(
-      (x) => x.UserId == rootStore.userId && x.IsLiked
+      (x) => x.UserId === rootStore.userId && x.IsLiked
     ) !== undefined;
+
+  const onItemReactionClicked = (isLiked: boolean) => {
+    if (onItemReaction)
+      onItemReaction({
+        ItemId: item.Id,
+        UserId: rootStore.userId,
+        IsLiked: isLiked,
+      });
+  };
 
   return (
     <Card>
@@ -43,10 +53,18 @@ export default function VideoItem({ item }: VideoItemProps) {
               </Typography>
               {!isVoted ? (
                 <Stack direction={"row"}>
-                  <IconButton aria-label="upvote" size="large">
+                  <IconButton
+                    aria-label="upvote"
+                    size="large"
+                    onClick={() => onItemReactionClicked(true)}
+                  >
                     <ThumbUpOffAltIcon fontSize="inherit" />
                   </IconButton>
-                  <IconButton aria-label="downvote" size="large">
+                  <IconButton
+                    aria-label="downvote"
+                    size="large"
+                    onClick={() => onItemReactionClicked(false)}
+                  >
                     <ThumbDownOffAltIcon fontSize="inherit" />
                   </IconButton>
                 </Stack>

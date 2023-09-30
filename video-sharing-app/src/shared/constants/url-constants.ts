@@ -6,4 +6,6 @@ export class UrlConstant {
 
   static readonly SHARE_VIDEO: string = `${UrlConstant.SERVER_URL}/Item`;
   static readonly GET_VIDEOS: string = `${UrlConstant.SERVER_URL}/Item`;
+
+  static readonly ITEM_REACTION: string = `${UrlConstant.SERVER_URL}/ItemReaction`;
 }

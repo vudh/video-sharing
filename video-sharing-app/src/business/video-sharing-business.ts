@@ -29,6 +29,10 @@ class VideoSharingBusiness {
     };
     return httpService.post(`${UrlConstant.SHARE_VIDEO}`, req);
   };
+
+  public itemReaction = async (payload): Promise<ShareVideoResponse> => {
+    return httpService.post(`${UrlConstant.ITEM_REACTION}`, payload);
+  };
 }
 
 export const videoSharingBusiness = new VideoSharingBusiness();

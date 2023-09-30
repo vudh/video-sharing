@@ -28,6 +28,9 @@ const MainNavbar = observer(() => {
     if (msg) {
       setOpenAlert(true);
       setAlertContent(msg);
+    } else {
+      setEmail("");
+      setPassword("");
     }
   };
 
@@ -43,7 +46,11 @@ const MainNavbar = observer(() => {
       setAlertContent(msg);
     } else {
       setOpenShareVideo(false);
+
+      rootStore.getVideos();
     }
+
+    return res ? res.Success || false : false;
   };
 
   const onRegisterUserSaved = async (values) => {
@@ -68,7 +75,7 @@ const MainNavbar = observer(() => {
 
   const onLogout = (ev) => {
     ev.preventDefault();
-    rootStore.setUserId("");
+    rootStore.logout();
   };
 
   return (

@@ -29,7 +29,8 @@ const ShareVideoDialog = ({ open, onClose, onSave }: ShareVideoProps) => {
     }),
     onSubmit: async (values) => {
       setIsSubmitting(true);
-      await onSave(values);
+      const ok = await onSave(values);
+      if (ok) formik.resetForm();
       setIsSubmitting(false);
     },
   });
