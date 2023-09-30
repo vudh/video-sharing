@@ -2,6 +2,7 @@ import { userBusiness } from "business/user-business";
 import { videoSharingBusiness } from "business/video-sharing-business";
 import { Instance, cast, flow, types } from "mobx-state-tree";
 import { createContext, useContext } from "react";
+import { AppConstant } from "shared/constants/app-constants";
 import { LoggingLevel } from "shared/enums/logging-level";
 import { LoggingHelper } from "shared/helpers/logging-helper";
 import { BaseResponse } from "shared/models/responses/base-response";
@@ -33,6 +34,7 @@ const RootModel = types
       self.isLoading = true;
       // perhaps do some request to server to logout the user but for this demo, just make it simple like this
       self.setUserId("");
+      localStorage.removeItem(AppConstant.USER_ID);
       self.isLoading = false;
     },
     login: flow(function* (email: string, password: string) {
@@ -42,6 +44,7 @@ const RootModel = types
 
         const result: LoginResponse = yield userBusiness.login(email, password);
         if (result?.Success) {
+          localStorage.setItem(AppConstant.USER_ID, email);
           self.setUserId(email);
           self.setUserName(result?.UserName || "");
         }
