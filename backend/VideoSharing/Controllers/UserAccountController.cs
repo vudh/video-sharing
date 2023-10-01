@@ -52,15 +52,25 @@ namespace VideoSharing.Controllers
         {
             var result = new RegisterUserResponse();
 
+            entity.Id = entity.Id.ToLower();
             entity.Password = PasswordHelper.HashPassword(entity.Password);
             entity.PartitionKey = entity.Name;
             entity.RowKey = entity.Id;
             
             try
             {
-                var createdEntity = await _storageService.UpsertEntityAsync(entity);
-                result.Success = true;
-                result.UserId = entity.Id;
+                var found = await _storageService.GetEntityAsync(entity.Id);
+                if(found == null)
+                {
+                    var createdEntity = await _storageService.UpsertEntityAsync(entity);
+                    result.Success = true;
+                    result.UserId = entity.Id;
+                }
+                else
+                {
+                    result.Success = false;
+                    result.Message = $"User account has been existed. Please try again!";
+                }
             }
             catch (Exception ex)
             {
