@@ -28,3 +28,4 @@ yarn.lock
 /backend/VideoSharing/.vs
 /backend/VideoSharing/bin
 /backend/VideoSharing/obj
+*.user
