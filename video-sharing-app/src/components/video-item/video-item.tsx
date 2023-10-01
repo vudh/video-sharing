@@ -18,9 +18,11 @@ export default function VideoItem({ item, onItemReaction }: VideoItemProps) {
   const rootStore = useStores();
 
   const isVoted =
+    rootStore.userId &&
     item.ItemReactions?.find((x) => x.UserId === rootStore.userId) !==
-    undefined;
+      undefined;
   const isUpVoted =
+    rootStore.userId &&
     item.ItemReactions?.find(
       (x) => x.UserId === rootStore.userId && x.IsLiked
     ) !== undefined;
@@ -51,7 +53,7 @@ export default function VideoItem({ item, onItemReaction }: VideoItemProps) {
               <Typography sx={{ mb: 1.5 }} color="text.secondary">
                 Shared by: {item.SharedBy}
               </Typography>
-              {!isVoted ? (
+              {!rootStore.userId ? null : !isVoted ? (
                 <Stack direction={"row"}>
                   <IconButton
                     aria-label="upvote"
